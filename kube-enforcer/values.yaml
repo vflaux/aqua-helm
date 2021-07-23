@@ -23,8 +23,6 @@ image:
 nameOverride: "aqua-kube-enforcer"
 fullnameOverride: "aqua-kube-enforcer"
 
-namespace: "aqua"
-
 logLevel: ""
 
 # Set create to false if you want to use an existing secret for the kube-enforcer certs
