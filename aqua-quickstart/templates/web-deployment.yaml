@@ -129,11 +129,11 @@ spec:
           {{- end }}
         {{- if .Values.clustermode }}
         - name: CLUSTER_MODE
-          value: "enable"  
+          value: "enable"
         {{- end }}
         {{- if .Values.activeactive }}
         - name: AQUA_CLUSTER_MODE
-          value: "active-active"  
+          value: "active-active"
         {{- end }}
         {{- if .Values.admin.token }}
         - name: LICENSE_TOKEN

@@ -91,43 +91,43 @@ $ helm upgrade --install --namespace aqua aqua aqua-helm/server --set imageCrede
       ```shell
       # Self-Signed Root CA (Optional)
       #####################################################################################
-      
+
       # Create Root Key
       # If you want a non password protected key just remove the -des3 option
       openssl genrsa -des3 -out rootCA.key 4096
-      
+
       # Create and self sign the Root Certificate
       openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.crt
-      
+
       #####################################################################################
       # Create a certificate
       #####################################################################################
-      
+
       # Create the certificate key
       openssl genrsa -out mydomain.com.key 2048
       # Create the signing (csr)
       openssl req -new -key mydomain.com.key -out mydomain.com.csr
       # Verify the csr content
       openssl req -in mydomain.com.csr -noout -text
-      
+
       #####################################################################################
       # Generate the certificate using the mydomain csr and key along with the CA Root key
       #####################################################################################
 
       openssl x509 -req -in mydomain.com.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out mydomain.com.crt -days 500 -sha256
-      
+
       #####################################################################################
       # If you wish to use a Public CA like GoDaddy or LetsEncrypt please
       # submit the mydomain csr to the respective CA to generate mydomain crt
       ```
-   
+
    2. Create TLS cert secret
-   
+
       ```shell
       $ kubectl create secret generic aqua-lb-tls --from-file=mydomain.com.crt --from-file=mydomain.com.key --from-file=rootCA.crt -n aqua
       ```
-   
-   3. Edit the values.yaml file to include above secret 
+
+   3. Edit the values.yaml file to include above secret
    ```
        TLS:
          listener:
@@ -136,7 +136,7 @@ $ helm upgrade --install --namespace aqua aqua aqua-helm/server --set imageCrede
             privateKey_fileName: "mydomain.com.key"
             rootCA_fileName: "rootCA.crt"
    ```
-   
+
    4. [Optional] If Gateway requires client certificate authentication edit the values.yaml to include those secrets as well:
    ```
        TLS:
@@ -148,9 +148,9 @@ $ helm upgrade --install --namespace aqua aqua aqua-helm/server --set imageCrede
             privateKey_fileName: "envoy.key"
             rootCA_fileName: "rootCA.crt"
    ```
-   
+
    5. For more customizations please refer to [***Configurable Variables***](#configure-variables)
-   
+
 ### 2. Database
 
    1. By default aqua helm chart will deploy a database container. If you wish to use an external database please set `db.external.enabled` to true and the following with appropriate values.
@@ -167,12 +167,12 @@ $ helm upgrade --install --namespace aqua aqua aqua-helm/server --set imageCrede
       2. db.external.auditHost
       3. db.external.auditPort
       4. db.external.auditUser
-      5. db.external.auditPassword      
+      5. db.external.auditPassword
       ```
    3. If you are using packaged DB container then
       1. AQUA_ENV_SIZE variable can be used to define the sizing of your DB container in terms of number of connections and optimized configuration but not the PV size. Please choose appropriate PV size as per your requirements.
       2. By default AQUA_ENV_SIZE is set to `"S"` and the possible values are `"M", "L"`
-   
+
 ### 3. Configuring HTTPS for Aqua's server
 
    By default Aqua will generate a self signed cert and will use the same for HTTPS communication. If you wish to use your own SSL/TLS certs you can do this in two different ways
@@ -203,17 +203,17 @@ $ helm upgrade --install --namespace aqua aqua aqua-helm/server --set imageCrede
       ```shell
       # Self-Signed Root CA (Optional)
       #####################################################################################
-      
+
       # Create Root Key
       # If you want a non password protected key just remove the -des3 option
       openssl genrsa -des3 -out rootCA.key 4096
       # Create and self sign the Root Certificate
       openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.crt
-      
+
       #####################################################################################
       # Create a aqua server and gateway certificate
       #####################################################################################
-      
+
       # Create the server certificate key
       openssl genrsa -out aqua_web_mydomain.com.key 2048
       # Create the gateway certificate key
@@ -225,15 +225,15 @@ $ helm upgrade --install --namespace aqua aqua aqua-helm/server --set imageCrede
       # Verify the csr content
       openssl req -in aqua_web_mydomain.com.csr -noout -text
       openssl req -in aqua_gateway_mydomain.com.csr -noout -text
-      
+
       #####################################################################################
       # Generate the certificate using the mydomain csr and key along with the CA Root key
       # for server and gateway
       #####################################################################################
-      
+
       openssl x509 -req -in aqua_web_mydomain.com.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out aqua_web_mydomain.com.crt -days 500 -sha256
       openssl x509 -req -in aqua_gateway_mydomain.com.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out aqua_gateway_mydomain.com.crt -days 500 -sha256
-      
+
       #####################################################################################
       # If you wish to use a Public CA like GoDaddy or LetsEncrypt please
       # submit the mydomain csr to the respective CA to generate mydomain crt
@@ -264,13 +264,13 @@ $ helm upgrade --install --namespace aqua aqua aqua-helm/server --set imageCrede
       2. db.external.pubsubHost
       3. db.external.pubsubPort
       4. db.external.pubsubUser
-      5. db.external.pubsubPassword      
+      5. db.external.pubsubPassword
       ```
 
 ## Configurable Variables
 
-Parameter | Description | Default| Mandatory 
---------- | ----------- | ------- | ------- 
+Parameter | Description | Default| Mandatory
+--------- | ----------- | ------- | -------
 `imageCredentials.create` | Set if to create new pull image secret | `true`| `YES`
 `imageCredentials.name` | Your Docker pull image secret name | `aqua-registry-secret`| `YES`
 `imageCredentials.repositoryUriPrefix` | repository uri prefix for dockerhub set `docker.io` | `registry.aquasec.com`| `YES`
@@ -315,26 +315,26 @@ Parameter | Description | Default| Mandatory
 `db.ssl` | If require an SSL-encrypted connection to the Postgres configuration database. |	`false`| `NO`
 `db.auditssl` | If require an SSL-encrypted connection to the Postgres configuration audit database. |	`false`| `NO`
 `db.pubsubssl` | If require an SSL-encrypted connection to the Postgres configuration pubsub database. |	`false`| `NO`
-`db.persistence.enabled` | If true, Persistent Volume Claim will be created |	`true`| `NO` 
-`db.persistence.accessModes` |	Persistent Volume access mode |	`ReadWriteOnce`| `NO` 
-`db.persistence.size` |	Persistent Volume size | `30Gi`| `NO` 
-`db.persistence.storageClass` |	Persistent Volume Storage Class | `unset`| `NO` 
-`db.image.repository` | the docker image name to use | `database`| `NO` 
-`db.image.tag` | The image tag to use. | `6.0`| `NO` 
-`db.image.pullPolicy` | The kubernetes image pull policy. | `IfNotPresent`| `NO` 
-`db.service.type` | k8s service type | `ClusterIP`| `NO` 
-`db.resources` |	Resource requests and limits | `{}`| `NO` 
-`db.nodeSelector` |	Kubernetes node selector	| `{}`| `NO` 
-`db.tolerations` |	Kubernetes node tolerations	| `[]`| `NO` 
-`db.affinity` |	Kubernetes node affinity | `{}`| `NO` 
+`db.persistence.enabled` | If true, Persistent Volume Claim will be created |	`true`| `NO`
+`db.persistence.accessModes` |	Persistent Volume access mode |	`ReadWriteOnce`| `NO`
+`db.persistence.size` |	Persistent Volume size | `30Gi`| `NO`
+`db.persistence.storageClass` |	Persistent Volume Storage Class | `unset`| `NO`
+`db.image.repository` | the docker image name to use | `database`| `NO`
+`db.image.tag` | The image tag to use. | `6.0`| `NO`
+`db.image.pullPolicy` | The kubernetes image pull policy. | `IfNotPresent`| `NO`
+`db.service.type` | k8s service type | `ClusterIP`| `NO`
+`db.resources` |	Resource requests and limits | `{}`| `NO`
+`db.nodeSelector` |	Kubernetes node selector	| `{}`| `NO`
+`db.tolerations` |	Kubernetes node tolerations	| `[]`| `NO`
+`db.affinity` |	Kubernetes node affinity | `{}`| `NO`
 `db.podAnnotations` | Kubernetes pod annotations | `{}` | `NO`
-`db.securityContext` | Set of security context for the container | `nil`| `NO` 
+`db.securityContext` | Set of security context for the container | `nil`| `NO`
 `db.extraEnvironmentVars` | is a list of extra environment variables to set in the database deployments. | `{}`| `NO`
 `db.extraSecretEnvironmentVars` | is a list of extra environment variables to set in the database deployments, these variables take value from existing Secret objects. | `[]`| `NO`
-`gate.image.repository` | the docker image name to use | `gateway`| `NO` 
-`gate.image.tag` | The image tag to use. | `6.0`| `NO` 
-`gate.image.pullPolicy` | The kubernetes image pull policy. | `IfNotPresent`| `NO` 
-`gate.service.type` | k8s service type | `ClusterIP`| `NO` 
+`gate.image.repository` | the docker image name to use | `gateway`| `NO`
+`gate.image.tag` | The image tag to use. | `6.0`| `NO`
+`gate.image.pullPolicy` | The kubernetes image pull policy. | `IfNotPresent`| `NO`
+`gate.service.type` | k8s service type | `ClusterIP`| `NO`
 `gate.service.loadbalancerIP` | can specify loadBalancerIP address for aqua-web in AKS platform | `null` | `NO`
 `gate.service.annotations` |	service annotations	| `{}` | `NO`
 `gate.service.ports` | array of ports settings | `array`| `NO`
@@ -354,9 +354,9 @@ Parameter | Description | Default| Mandatory
 `gate.TLS.aqua_verify_enforcer` | change it to "1" or "0" for enabling/disabling mTLS between enforcer and gateway/envoy | `0`  |  `YES` <br /> `if gate.TLS.enabled is set to true`
 `gate.extraEnvironmentVars` | is a list of extra environment variables to set in the gateway deployments. | `{}`| `NO`
 `gate.extraSecretEnvironmentVars` | is a list of extra environment variables to set in the gateway deployments, these variables take value from existing Secret objects. | `[]`| `NO`
-`web.image.repository` | the docker image name to use | `console`| `NO` 
-`web.image.tag` | The image tag to use. | `6.0`| `NO` 
-`web.image.pullPolicy` | The kubernetes image pull policy. | `IfNotPresent`| `NO` 
+`web.image.repository` | the docker image name to use | `console`| `NO`
+`web.image.tag` | The image tag to use. | `6.0`| `NO`
+`web.image.pullPolicy` | The kubernetes image pull policy. | `IfNotPresent`| `NO`
 `web.service.type` | k8s service type | `LoadBalancer`| `NO`
 `web.service.loadbalancerIP` | can specify loadBalancerIP address for aqua-web in AKS platform | `null` | `NO`
 `web.service.annotations` |	service annotations	| `{}`| `NO`
@@ -405,7 +405,7 @@ Parameter | Description | Default| Mandatory
 `envoy.podAnnotations` | Kubernetes pod annotations | `{}` | `NO`
 `envoy.affinity` |	Kubernetes node affinity | `{}`| `NO`
 `envoy.securityContext` | Set of security context for the container | `nil`| `NO`
-`envoy.files.envoy.yaml` | content of a full envoy configuration file as documented in https://www.envoyproxy.io/docs/envoy/latest/configuration/configuration | check [values.yaml](values.yaml) 
+`envoy.files.envoy.yaml` | content of a full envoy configuration file as documented in https://www.envoyproxy.io/docs/envoy/latest/configuration/configuration | check [values.yaml](values.yaml)
 
 ## Issues and feedback
 

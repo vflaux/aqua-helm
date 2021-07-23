@@ -1,5 +1,5 @@
 
-Now that you have deployed Aqua Tenant Manager, you should look over the docs on using: 
+Now that you have deployed Aqua Tenant Manager, you should look over the docs on using:
 
 https://docs.aquasec.com/docs
 

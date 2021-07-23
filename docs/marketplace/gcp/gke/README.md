@@ -24,12 +24,12 @@ Now be patient as the deployment takes approximately three minutes.
 >| Medium Node | 3-7 vCPU   |
 >| Large Node  | 8+ vCPU    |
 >
->GCP allows an organization to designate a billing admin. A [billing admin permission](https://cloud.google.com/billing/docs/how-to/billing-access) allows the user to specify the billing plan an entire org may utilize. For example, Aqua CSP has three billing sizes, yet the billing admin chose the small plan. The Kubernetes admin, in this case, would not be allowed >to deploy Aqua CSP on a cluster with nodes of 12 vCPU. K8s admins, be advised this functionality exists.  
+>GCP allows an organization to designate a billing admin. A [billing admin permission](https://cloud.google.com/billing/docs/how-to/billing-access) allows the user to specify the billing plan an entire org may utilize. For example, Aqua CSP has three billing sizes, yet the billing admin chose the small plan. The Kubernetes admin, in this case, would not be allowed >to deploy Aqua CSP on a cluster with nodes of 12 vCPU. K8s admins, be advised this functionality exists.
 
 ## Complete Initial Deployment
 
 The marketplace deployer will automatically deploy the Aqua Command Center and accompanying Aqua Enforcers set to audit mode. This process takes approx. three minutes. The following four basic steps are necessary to complete deployment. They are also depicted in the notes side of the GCP deployer panel.
-  
+
 ## 1. Backup Auto-Generated Secrets
 
 By default, the Aqua PostgreSQL container utilizes a persistent volume (PVC). When removing the application, this PVC is not deleted along with your application to save your data.

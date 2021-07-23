@@ -27,15 +27,15 @@ Refer to the Aqua Enterprise product documentation for the broader context: [Kub
 
 This repository includes the following charts; they can be deployed separately:
 
-| Chart | Description | Latest Chart Version |
-|-|-|-|
-| [Server](server/) | Deploys the Console, Database, and Gateway components; optionally deploys Envoy component | 6.0.5 |
-| [Enforcer](enforcer/) | Deploys the Aqua Enforcer daemonset | 6.0.4 |
-| [Scanner](scanner/)  | Deploys the Aqua Scanner deployment | 6.0.5 |
-| [KubeEnforcer](kube-enforcer/)| Deploys the Aqua KubeEnforcer | 6.0.4 |
-| [Gateway](gateway)| Deploys the Aqua Standalone Gateway | 6.0.2 |
-| [Tenant-Manager](tenant-manager/)| Deploys the Aqua Tenant Manager | 6.0.3 |
-| [QuickStart](aqua-quickstart/ )| Not for production use (see [below](#quick-start-deployment-not-for-production-purposes)). Deploys the Console, Database, Gateway and KubeEnforcer components | 6.0.1 |
+| Chart                             | Description                                                                                                                                                   | Latest Chart Version |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| [Server](server/)                 | Deploys the Console, Database, and Gateway components; optionally deploys Envoy component                                                                     | 6.0.5                |
+| [Enforcer](enforcer/)             | Deploys the Aqua Enforcer daemonset                                                                                                                           | 6.0.4                |
+| [Scanner](scanner/)               | Deploys the Aqua Scanner deployment                                                                                                                           | 6.0.5                |
+| [KubeEnforcer](kube-enforcer/)    | Deploys the Aqua KubeEnforcer                                                                                                                                 | 6.0.4                |
+| [Gateway](gateway)                | Deploys the Aqua Standalone Gateway                                                                                                                           | 6.0.2                |
+| [Tenant-Manager](tenant-manager/) | Deploys the Aqua Tenant Manager                                                                                                                               | 6.0.3                |
+| [QuickStart](aqua-quickstart/ )   | Not for production use (see [below](#quick-start-deployment-not-for-production-purposes)). Deploys the Console, Database, Gateway and KubeEnforcer components | 6.0.1                |
 
 # Deployment instructions
 
@@ -127,12 +127,12 @@ helm init --service-account tiller --upgrade
 #### Error 2
 
 * Error message: **No persistent volumes available for this claim and no storage class is set.**
-* Solution: Most managed Kubernetes deployments do NOT include all possible storage provider variations at setup time. Refer to the [official Kubernetes guidance on storage classes](https://kubernetes.io/docs/concepts/storage/storage-classes/) for your platform. 
+* Solution: Most managed Kubernetes deployments do NOT include all possible storage provider variations at setup time. Refer to the [official Kubernetes guidance on storage classes](https://kubernetes.io/docs/concepts/storage/storage-classes/) for your platform.
 For more information see the [storage documentation](docs/storage.md).
 
 #### Error 3
 
-* Error message: When executing `kubectl get events -n aqua` you might encounter either **No persistent volumes available for this claim and no storage class is set** or 
+* Error message: When executing `kubectl get events -n aqua` you might encounter either **No persistent volumes available for this claim and no storage class is set** or
 **PersistentVolumeClaim is not bound**.
 * Solution: If you encounter either of these errors, you need to create a persistent volume prior to chart deployment with a generic or existing storage class. Specify `db.persistence.storageClass` in the values.yaml file. A sample file using `aqua-storage` is included in the repo.
 
@@ -142,10 +142,10 @@ $ kubectl apply -f pv-example.yaml
 
 # Quick-start deployment (not for production purposes)
 
-Quick-start deployments are fast and easy. 
+Quick-start deployments are fast and easy.
 They are intended for deploying Aqua Enterprise for non-production purposes, such as proofs-of-concept (POCs) and environments intended for instruction, development, and test.
 
-Use the [**aqua-quickstart**](aqua-quickstart) chart to 
+Use the [**aqua-quickstart**](aqua-quickstart) chart to
 
   1. Clone the GitHub repository
   ```bash

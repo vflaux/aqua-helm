@@ -22,10 +22,10 @@ spec:
             - containerPort: 8443
           env:
             - name: AQUA_TOKEN
-              valueFrom: 
+              valueFrom:
                 secretKeyRef:
                   name: {{ .Values.ke.aquaSecret.name }}
-                  key: token      
+                  key: token
             - name: AQUA_ENABLE_CACHE
               value: "{{ .Values.ke.aqua_enable_cache }}"
             - name: AQUA_CACHE_EXPIRATION_PERIOD
@@ -49,4 +49,4 @@ spec:
         - name: {{ .Values.imageCredentials.name }}
   selector:
     matchLabels:
-      app: {{ include "kube-enforcer.fullname" . }}                           
+      app: {{ include "kube-enforcer.fullname" . }}

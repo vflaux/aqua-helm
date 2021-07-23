@@ -98,7 +98,7 @@ In order to support L7 / gRPC communication between enforcer and envoy or enforc
    2. Create enforcer agent cert secret
 
       ```shell
-      ## Example: 
+      ## Example:
       ## Change < certificate filenames > respectively
       $ kubectl create secret generic aqua-enforcer-certs --from-file <aqua_enforcer_private.key> --from-file <aqua_enforcer_public.crt> --from-file <rootCA.crt> -n aqua
       ```
@@ -127,8 +127,8 @@ For more details please visit [Link](https://docs.aquasec.com/docs/kubernetes#se
 
 ### Enforcer
 
-Parameter | Description | Default| Mandatory 
---------- | ----------- | ------- | ------- 
+Parameter | Description | Default| Mandatory
+--------- | ----------- | ------- | -------
 `imageCredentials.create` | Set if to create new pull image secret | `false`| `YES - New cluster`
 `imageCredentials.name` | Your Docker pull image secret name | `aqua-registry-secret`| `YES - New cluster`
 `imageCredentials.repositoryUriPrefix` | repository uri prefix for dockerhub set `docker.io` | `registry.aquasec.com`| `YES - New cluster`
